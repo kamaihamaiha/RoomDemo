@@ -16,6 +16,21 @@ public class Word {
     @ColumnInfo(name = "chinese_word")
     private String chineseMeaning;
 
+
+    public Word() {
+    }
+
+    public Word(String word, String chineseMeaning) {
+        this.word = word;
+        this.chineseMeaning = chineseMeaning;
+    }
+
+    public Word(int id, String word, String chineseMeaning) {
+        this.id = id;
+        this.word = word;
+        this.chineseMeaning = chineseMeaning;
+    }
+
     public int getId() {
         return id;
     }
@@ -39,4 +54,6 @@ public class Word {
     public void setChineseMeaning(String chineseMeaning) {
         this.chineseMeaning = chineseMeaning;
     }
+
+
 }

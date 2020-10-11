@@ -25,6 +25,10 @@ public class WordViewModel extends AndroidViewModel {
         return allWords;
     }
 
+    public LiveData<List<Word>> findWordsWithParams(String params){
+        return wordRepository.findWordsWithParams(params);
+    }
+
     public void insertWord(Word... words){
         wordRepository.insertWord(words);
     }

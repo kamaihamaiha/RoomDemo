@@ -12,34 +12,38 @@ public class WordRepository {
     private final LiveData<List<Word>> allWords;
     private final WordDao wordDao;
 
-   public WordRepository(Application application) {
+    public WordRepository(Application application) {
         WordDatabase database = WordDatabase.getINSTANCE(application);
         wordDao = database.getWordDao();
         allWords = wordDao.getAllWords();
     }
 
-   public LiveData<List<Word>> getAllWords() {
+    public LiveData<List<Word>> getAllWords() {
         return allWords;
     }
 
-   public void insertWord(Word... words) {
+    public LiveData<List<Word>> findWordsWithParams(String params){
+        return wordDao.findWordWithParams("%" + params + "%");
+    }
+
+    public void insertWord(Word... words) {
         new InsertWordTask(wordDao).execute(words);
     }
 
-   public void deleteWord(Word... words) {
+    public void deleteWord(Word... words) {
         new DeleteWordTask(wordDao).execute(words);
     }
 
-   public void deleteAllWord() {
+    public void deleteAllWord() {
         new DeleteAllWordTask(wordDao).execute();
     }
 
-   public void updateWord(Word... words) {
+    public void updateWord(Word... words) {
         new UpdateWordTask(wordDao).execute(words);
     }
 
 
-   public int getLastWordId() {
+    public int getLastWordId() {
         Word lastWord = wordDao.getLastWord();
         return lastWord == null ? 0 : lastWord.getId();
     }

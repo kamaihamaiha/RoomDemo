@@ -27,6 +27,9 @@ public interface WordDao {
     @Query("select * from word order by id desc")
     LiveData<List<Word>> getAllWords();
 
+    @Query("select * from word where english_word like :params order by id desc")
+    LiveData<List<Word>> findWordWithParams(String params);
+
     @Query("select * from word order by id desc limit 1")
     Word getLastWord();
 }

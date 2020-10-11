@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //把 fragment 信息导航到 actionBar 上面
+        //把 fragment 信息导航到 actionBar 上面. step1
         navController = Navigation.findNavController(findViewById(R.id.fragment));
         NavigationUI.setupActionBarWithNavController(this,
                 navController);
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        //把 fragment 信息导航到 actionBar 上面. step2
         navController.navigateUp();
         return super.onSupportNavigateUp();
     }

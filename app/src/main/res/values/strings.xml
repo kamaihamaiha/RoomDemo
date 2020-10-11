@@ -5,6 +5,11 @@
     <string name="modify">modify</string>
     <string name="clear">clear</string>
 
+    <string name="add_word">添加单词</string>
+    <string name="add_word_hint">Please input English word.</string>
+    <string name="add_word_chinese_hint">中文释义.</string>
+    <string name="add_word_confirm">确  定</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

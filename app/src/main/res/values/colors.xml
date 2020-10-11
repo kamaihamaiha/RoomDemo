@@ -12,6 +12,7 @@
     <color name="grey">#777</color>
     <color name="greyLight">#aaa</color>
     <color name="greyDark">#555</color>
-    <color name="blue">#66f</color>
+    <color name="blue">#77f</color>
+    <color name="blueDark">#22f</color>
     <color name="white">#fff</color>
 </resources>

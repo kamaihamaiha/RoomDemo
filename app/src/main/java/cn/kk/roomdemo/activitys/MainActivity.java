@@ -1,22 +1,29 @@
-package cn.kk.roomdemo;
+package cn.kk.roomdemo.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 import java.util.List;
+
+import cn.kk.roomdemo.R;
+import cn.kk.roomdemo.adapter.WordAdapter;
+import cn.kk.roomdemo.constant.Data;
+import cn.kk.roomdemo.db.Word;
+import cn.kk.roomdemo.utils.ToastHelper;
+import cn.kk.roomdemo.viewmodel.WordViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private WordViewModel wordViewModel;
     private int index = 0;
     private LiveData<List<Word>> allWords;
-    private TextView tvData;
+    private RecyclerView recyclerView;
+    private WordAdapter wordAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +37,33 @@ public class MainActivity extends AppCompatActivity {
 
         initData();
 
-        tvData = findViewById(R.id.tvData);
+        recyclerView = findViewById(R.id.recyclerView);
+        wordAdapter = new WordAdapter();
+        wordAdapter.setmWordViewModel(wordViewModel);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(wordAdapter);
+
+
         findViewById(R.id.btnAdd).setOnClickListener(v -> {
-            Word word = new Word(index, "w_" + index, "我_" + index);
+            int remainder = index % Data.tempDataEnglish.length;
+            index++;
+            Word word = new Word(index, Data.tempDataEnglish[remainder], Data.tempDataChinese[remainder]);
             wordViewModel.insertWord(word);
 
-            index++;
         });
+
         findViewById(R.id.btnDelete).setOnClickListener(v -> {
             Word word = new Word();
+            index--;
             word.setId(index);
             wordViewModel.deleteWord(word);
 
-            index--;
         });
+
         findViewById(R.id.btnModify).setOnClickListener(v -> {
             Word word = new Word();
-            word.setId(index);
-            word.setChineseMeaning("吾_");
+            word.setId(index - 1);
+            word.setChineseMeaning("新");
             wordViewModel.updateWord(word);
 
         });
@@ -56,27 +72,21 @@ public class MainActivity extends AppCompatActivity {
             index = 0;
         });
 
-
     }
 
     private void initData() {
         allWords = wordViewModel.getAllWords();
+        index = wordViewModel.getLastWordId() + 1;
         allWords.observe(this, words -> {
-            StringBuilder data = new StringBuilder();
-            if (words.isEmpty()) {
-                tvData.setText("");
-            } else {
-                for (Word word : words) {
-                    data.append(word.getId())
-                            .append(", ")
-                            .append(word.getWord())
-                            .append(", ")
-                            .append(word.getChineseMeaning())
-                            .append("\n");
-                }
-                tvData.setText(data.toString());
-            }
+
+            wordAdapter.setAllWordList(words);
+            wordAdapter.notifyDataSetChanged();
+
+            ToastHelper.showShort("当前 index: " + index);
         });
+
+
+        ToastHelper.getInstance(getApplicationContext());
     }
 
 

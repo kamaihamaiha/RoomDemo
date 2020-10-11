@@ -1,4 +1,4 @@
-package cn.kk.roomdemo;
+package cn.kk.roomdemo.viewmodel;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -6,6 +6,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+
+import cn.kk.roomdemo.db.Word;
+import cn.kk.roomdemo.db.WordRepository;
 
 public class WordViewModel extends AndroidViewModel {
 
@@ -18,7 +21,7 @@ public class WordViewModel extends AndroidViewModel {
         allWords = wordRepository.getAllWords();
     }
 
-    public LiveData<List<Word>> getAllWords() {
+   public   LiveData<List<Word>> getAllWords() {
         return allWords;
     }
 
@@ -38,8 +41,8 @@ public class WordViewModel extends AndroidViewModel {
         wordRepository.updateWord(words);
     }
 
-
-
-
+    public int getLastWordId(){
+       return wordRepository.getLastWordId();
+    }
 
 }

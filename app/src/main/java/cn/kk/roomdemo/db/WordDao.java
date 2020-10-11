@@ -1,4 +1,4 @@
-package cn.kk.roomdemo;
+package cn.kk.roomdemo.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

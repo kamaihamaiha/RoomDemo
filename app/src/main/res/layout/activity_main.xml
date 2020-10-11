@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="word"
-            type="cn.kk.roomdemo.WordViewModel" />
+            type="cn.kk.roomdemo.viewmodel.WordViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".activitys.MainActivity">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="41dp">
 
-            <TextView
-                android:id="@+id/tvData"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnAdd"
-                style="@style/btnStyle"
+                style="@style/btnGreenStyle"
                 android:text="@string/add" />
 
             <View
@@ -41,7 +42,7 @@
 
             <Button
                 android:id="@+id/btnDelete"
-                style="@style/btnStyle"
+                style="@style/btnGreyStyle"
                 android:text="@string/delete" />
 
             <View
@@ -50,7 +51,7 @@
 
             <Button
                 android:id="@+id/btnModify"
-                style="@style/btnStyle"
+                style="@style/btnOrangeStyle"
                 android:text="@string/modify" />
 
             <View
@@ -59,7 +60,7 @@
 
             <Button
                 android:id="@+id/btnClear"
-                style="@style/btnStyle"
+                style="@style/btnRedStyle"
                 android:text="@string/clear" />
         </LinearLayout>
 

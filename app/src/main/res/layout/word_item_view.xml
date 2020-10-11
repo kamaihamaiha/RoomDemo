@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_word_item"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/press_white2grey_light">
+
+    <TextView
+        android:id="@+id/tv_word_item_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="6dp"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tv_word_item_english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tv_word_item_chinese"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="@color/orangeDark"
+        android:textSize="22sp" />
+
+    <Switch
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:id="@+id/switchWordItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="6dp"
+        android:background="@color/grey" />
+
+</RelativeLayout>

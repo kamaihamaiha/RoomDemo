@@ -26,7 +26,7 @@ import cn.kk.roomdemo.utils.ToastHelper;
 import cn.kk.roomdemo.viewmodel.WordViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 单词页面
  */
 public class WordsFragment extends Fragment {
 
@@ -68,6 +68,7 @@ public class WordsFragment extends Fragment {
 
         ToastHelper.getInstance(requireActivity());
 
+        //添加按钮，具有导航功能，指引到 AddFragment 页面
         addFloatingActionButton = requireActivity().findViewById(R.id.floatingActionButton);
         addFloatingActionButton.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);

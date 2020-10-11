@@ -6,6 +6,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,11 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import cn.kk.roomdemo.R;
 import cn.kk.roomdemo.adapter.WordAdapter;
 import cn.kk.roomdemo.db.Word;
+import cn.kk.roomdemo.utils.ToastHelper;
 import cn.kk.roomdemo.viewmodel.WordViewModel;
 
 /**
@@ -28,6 +33,8 @@ public class WordsFragment extends Fragment {
     private WordViewModel wordViewModel;
     private RecyclerView wordsRecyclerView;
     private WordAdapter wordAdapter;
+
+    private FloatingActionButton addFloatingActionButton;
 
     public WordsFragment() {
         // Required empty public constructor
@@ -50,11 +57,21 @@ public class WordsFragment extends Fragment {
         wordsRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
         wordAdapter = new WordAdapter();
+        wordAdapter.setmWordViewModel(wordViewModel);
         wordsRecyclerView.setAdapter(wordAdapter);
+
 
         wordViewModel.getAllWords().observe(requireActivity(), words -> {
             wordAdapter.setAllWordList(words);
             wordAdapter.notifyDataSetChanged();
+        });
+
+        ToastHelper.getInstance(requireActivity());
+
+        addFloatingActionButton = requireActivity().findViewById(R.id.floatingActionButton);
+        addFloatingActionButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.action_wordsFragment_to_addFragment);
         });
     }
 }

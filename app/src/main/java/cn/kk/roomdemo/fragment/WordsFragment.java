@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class WordsFragment extends Fragment {
 
     private FloatingActionButton addFloatingActionButton;
     private LiveData<List<Word>> filterWords;
+    private List<Word> allWords;
 
     public WordsFragment() {
         // Required empty public constructor
@@ -78,6 +81,7 @@ public class WordsFragment extends Fragment {
                 //模糊查询，数据库
                 filterWords = wordViewModel.findWordsWithParams(newText);
                 filterWords.observe(requireActivity(), words -> {
+                    allWords = words;
                     wordAdapter.setAllWordList(words);
                     wordAdapter.notifyDataSetChanged();
                 });
@@ -133,6 +137,7 @@ public class WordsFragment extends Fragment {
 
         filterWords = wordViewModel.getAllWords();
         filterWords.observe(requireActivity(), words -> {
+            allWords = words;
             wordAdapter.setAllWordList(words);
             wordAdapter.notifyDataSetChanged();
         });
@@ -145,5 +150,31 @@ public class WordsFragment extends Fragment {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_wordsFragment_to_addFragment);
         });
+
+        //item 滑动操作
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.START
+                | ItemTouchHelper.END) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Word deleteWord = allWords.get(viewHolder.getAdapterPosition());
+                wordViewModel.deleteWord(deleteWord);
+
+                //撤销删除
+                Snackbar.make(requireActivity().findViewById(R.id.root_fragment_words),"delete",Snackbar.LENGTH_LONG)
+                        .setAction("撤销", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wordViewModel.insertWord(deleteWord);
+                            }
+                        }).show();
+            }
+        }).attachToRecyclerView(wordsRecyclerView);
     }
 }
